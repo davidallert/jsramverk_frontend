@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
+  "name": "jsramverk_frontend",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -15,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && rsync -av --delete -e \"ssh -i $HOME/.ssh/dbwebb\" build/ daae23@ssh.student.bth.se:www/editor"
   },
   "eslintConfig": {
     "extends": [
