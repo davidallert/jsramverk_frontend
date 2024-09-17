@@ -1,3 +1,5 @@
+# [Link to the student server](https://www.student.bth.se/~daae23/editor/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
