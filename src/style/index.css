@@ -1,0 +1,52 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  --react-color: #282c34;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--react-color);
+  color: #ffffff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.form-element {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 1%;
+  margin: 1% auto;
+  font-size: large;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.width-half {
+  width: 50%;
+}
+
+.width-quarter {
+  width: 25%;
+}
+
+.center {
+  margin: 0 auto;
+}
+
