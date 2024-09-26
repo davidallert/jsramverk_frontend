@@ -8,6 +8,7 @@
 
 html {
   --react-color: #282c34;
+  --react-accent: #6ad4ef;
 }
 
 body {
@@ -18,6 +19,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--react-color);
   color: #ffffff;
+}
+
+a {
+  color: var(--react-accent);
 }
 
 code {
@@ -49,4 +54,3 @@ code {
 .center {
   margin: 0 auto;
 }
-

@@ -1,0 +1,23 @@
+.nav {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.537);
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: xx-large;
+}
+
+.nav li {
+    margin: 10% auto;
+}
+
+.nav li a {
+    color: #ffffff;
+}
+
+.nav ul {
+    list-style-type: none;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import './style/index.css';
 
 // Pages etc.
@@ -15,15 +15,26 @@ import reportWebVitals from './reportWebVitals';
 
 export default function MyApp() {
   return (
-    <BrowserRouter>
+    // Only works locally.
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={<App />} />
+    //     <Route path="/hello" element={<HelloWorld />} />
+    //     <Route path="/documents" element={<Documents />} />
+    //     <Route path="/document/:id" element={<Document />} />
+    //     <Route path="/create" element={<CreateDocument />} />
+    //   </Routes>
+    // </BrowserRouter>
+
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/hello" element={<HelloWorld />} />
-        <Route path="/documents" element={<Documents />} />
-        <Route path="/document/:id" element={<Document />} />
-        <Route path="/create" element={<CreateDocument />} />
+        <Route path="/" element={ <App />} />
+        <Route path="/hello" element={ <HelloWorld />} />
+        <Route path="/documents" element={ <Documents />} />
+        <Route path="/document/:id" element={ <Document />} />
+        <Route path="/create" element={ <CreateDocument />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
