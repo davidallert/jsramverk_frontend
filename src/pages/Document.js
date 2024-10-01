@@ -78,7 +78,6 @@ const GetDocument = () => {
       return (
         <div className='width-half center'>
             <h1>Fetched Data</h1>
-            <div className='width-half center'>
             <form className="width-full" onSubmit={onSubmit}>
 
                 <label className="form-element" htmlFor="id">ID (readonly)</label>
@@ -101,7 +100,6 @@ const GetDocument = () => {
                 />
                 <input className="form-element" type="submit" />
             </form>
-            </div>
         </div>
       );
 }
