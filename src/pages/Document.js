@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import '../style/index.css';
 
 const GetDocument = () => {
-    const [documentElement, setDocumentElement] = useState([]);
     const params = useParams();
     const id = params.id;
+
+    const [title, setTitle] = useState("Loading...");
+    const [content, setContent] = useState("Loading...");
 
     const fetchDocument = async () => {
         try {
@@ -28,20 +30,16 @@ const GetDocument = () => {
         }
     }
 
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-
     const updateDocument = async () => {
         // TODO call post route with updated info.
         const doc = {
+            id: id,
             title: title,
             content: content
         }
 
-        console.log(doc);
-
         try {
-            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents/update`, {
+            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/document/update`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,39 +61,16 @@ const GetDocument = () => {
         event.preventDefault();
         const result = await updateDocument();
         console.log(result);
+
     }
 
     useEffect(() => {
         const dataFetchingEffect = async () => {
           const result = await fetchDocument();
           const document = result[0];
-          setTitle(document.title);  
-
-          const documentElement = (
-            <form className="width-full" onSubmit={onSubmit}>
-
-                <label className="form-element" htmlFor="id">ID (readonly)</label>
-                <input className="form-element" type="text" name="id" value={document._id} readOnly />
-                <label className="form-element" htmlFor ="title">Title</label>
-                <input
-                    className="form-element"
-                    type="text"
-                    name="title" 
-                    defaultValue={document.title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <label className="form-element" htmlFor ="content">Content</label>
-                <input
-                    className="form-element"
-                    type="text" 
-                    name="content"
-                    defaultValue={document.content}
-                    onChange={(e) => setContent(e.target.value)}
-                />
-                <input className="form-element" type="submit" />
-            </form>
-            )
-          setDocumentElement(documentElement);
+          setTitle(document.title);
+          setContent(document.content);
+          console.log(document);
         };
         dataFetchingEffect();
       }, []);
@@ -103,7 +78,30 @@ const GetDocument = () => {
       return (
         <div className='width-half center'>
             <h1>Fetched Data</h1>
-            {documentElement}
+            <div className='width-half center'>
+            <form className="width-full" onSubmit={onSubmit}>
+
+                <label className="form-element" htmlFor="id">ID (readonly)</label>
+                <input className="form-element" type="text" name="id" defaultValue={id} readOnly />
+                <label className="form-element" htmlFor ="title">Title</label>
+                <input
+                    className="form-element"
+                    type="text"
+                    name="title" 
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <label className="form-element" htmlFor ="content">Content</label>
+                <input
+                    className="form-element"
+                    type="text" 
+                    name="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
+                <input className="form-element" type="submit" />
+            </form>
+            </div>
         </div>
       );
 }
