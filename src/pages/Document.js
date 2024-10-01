@@ -63,28 +63,15 @@ const GetDocument = () => {
         event.preventDefault();
         const result = await updateDocument();
         console.log(result);
-
     }
 
     useEffect(() => {
-        
         const dataFetchingEffect = async () => {
           const result = await fetchDocument();
           const document = result[0];
           setTitle(document.title);  
 
           const documentElement = (
-            // <form className="width-full" key={document._id} onSubmit={onSubmit}>
-            //     <label className="form-element" htmlFor="id">ID (readonly)</label>
-            //     <input className="form-element" type="text" name="id" value={document._id} readOnly />
-            //     <label className="form-element" htmlFor ="title">Title</label>
-            //     <input className="form-element" type="text" name="title" value={document.title} />
-            //     <label className="form-element" htmlFor ="content">Content</label>
-            //     <input className="form-element" type="text" name="content" value={document.content} />
-            //     <input className="form-element" type="submit" />
-            // </form>
-
-            <div className='width-half center'>
             <form className="width-full" onSubmit={onSubmit}>
 
                 <label className="form-element" htmlFor="id">ID (readonly)</label>
@@ -107,11 +94,9 @@ const GetDocument = () => {
                 />
                 <input className="form-element" type="submit" />
             </form>
-            </div>
             )
           setDocumentElement(documentElement);
         };
-    
         dataFetchingEffect();
       }, []);
 
