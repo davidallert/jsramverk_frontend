@@ -84,6 +84,7 @@ const GetDocument = () => {
                 <input className="form-element" type="text" name="id" defaultValue={id} readOnly />
                 <label className="form-element" htmlFor ="title">Title</label>
                 <input
+                    id="title"
                     className="form-element"
                     type="text"
                     name="title" 
@@ -92,6 +93,7 @@ const GetDocument = () => {
                 />
                 <label className="form-element" htmlFor ="content">Content</label>
                 <input
+                    id="content"
                     className="form-element"
                     type="text" 
                     name="content"
