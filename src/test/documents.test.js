@@ -1,16 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import App from '../App';
 import GetDocuments from '../pages/Documents';
+import GetDocument from '../pages/Document';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
-// test('renders ', () => {
-//   const { container } = render(<App />);
-
-//   expect(screen.getByText(/folinodocs/i)).toBeInTheDocument();
-// });
-// test('renders debugging', () => {
-//   render(<GetDocuments/>);
-//   screen.debug();
-// });
 
 test('renders title ', () => {
     render(<GetDocuments/>);
@@ -25,10 +18,33 @@ test('renders title label ', async () => {
   // expect(labelElement).toBeInTheDocument();
 
   // await waitFor(() => expect(screen.getByText("Document 1")).toBeInTheDocument());
-    // const labelElement = await screen.findByText('Document 1');
-    const labelElement = await waitFor(() => screen.getByText(/"Document 1"/i));
+    // const labelElement = await screen.findByText(/'Document 1'/i);
+
+    // const labelElement = waitFor(() => screen.getByText(/"this is the first document."/i));
+    
+    // expect(labelElement).toBeInTheDocument();
+    console.log(screen.debug()); // Debug DOM:en
+
+    // Förväntar att texten "this is the first document." ska dyka upp i DOM:en
+    const labelElement = await screen.findByText(/this is the first document./i);
     expect(labelElement).toBeInTheDocument();
-    // await waitFor(() => {
-    //   expect(screen.getByText(/'Document 1'/i)).toBeInTheDocument();
-    // }, { timeout: 3000 }); // 3 seconds
+
+});
+
+
+test('renders document content correctly', async () => {
+  render(
+    <MemoryRouter initialEntries={['/document/66e6fce08939d00d5d5d578d']}>
+      <Routes>
+        <Route path="/document/:id" element={<GetDocument />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+
+  const loadingElements = screen.getAllByDisplayValue('Loading...');
+  expect(loadingElements).toHaveLength(2);
+
+  expect(loadingElements[0]).toHaveAttribute('name', 'title');
+  expect(loadingElements[1]).toHaveAttribute('name', 'content');
 });
