@@ -9,6 +9,7 @@ import Documents from './pages/Documents';
 import Document from './pages/Document';
 import CreateDocument from './pages/CreateDocument';
 import HelloWorld from './pages/HelloWorld'
+import CreateUser from './pages/CreateUser'
 
 // Utils.
 import reportWebVitals from './reportWebVitals';
@@ -33,6 +34,7 @@ export default function MyApp() {
         <Route path="/documents" element={ <Documents />} />
         <Route path="/document/:id" element={ <Document />} />
         <Route path="/create" element={ <CreateDocument />} />
+        <Route path="/user" element={ <CreateUser />} />
       </Routes>
     </HashRouter>
   );
