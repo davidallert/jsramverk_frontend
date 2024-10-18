@@ -17,7 +17,7 @@ const CreateUser = () => {
         }
 
         try {
-            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/users`, {
+            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,10 +35,11 @@ const CreateUser = () => {
         }
 
     }
-
+    
     const onSubmit = async (event) => {
         event.preventDefault();
         const response = await postUser(); // Post to /documents.
+        // console.log(response)
         if (response.ok) {
             console.info("Document created successfully.");
         }
