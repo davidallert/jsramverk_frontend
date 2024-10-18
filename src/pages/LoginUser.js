@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../style/index.css';
+import auth from '../models/auth';
 
 const LoginUser = () => {
 
@@ -18,6 +19,8 @@ const LoginUser = () => {
         }
 
         try {
+            // For deployment: https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/login
+            // For testing: http://localhost:1337/login
             const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/login`, {
                 method: 'POST',
                 headers: {
@@ -47,7 +50,8 @@ const LoginUser = () => {
 
         if (response) {
             console.info("Login successful.");
-            console.log(response);
+            console.log(response); // The response + token.
+            auth.token = response.token;
         }
     }
 

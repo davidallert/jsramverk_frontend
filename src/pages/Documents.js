@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/index.css';
+import auth from '../models/auth';
+import { Navigate } from 'react-router-dom';
 
 const GetDocuments = () => {
   const [documentList, setDocumentList] = useState([]);
+  const [message, setMessage] = useState("");
 
   const fetchDocuments = async () => {
     try {
+      // For deployment: https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents
+      // For testing: http://localhost:1337/documents
       const response = await fetch('https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': auth.token,
         },
       });
 
@@ -30,6 +36,12 @@ const GetDocuments = () => {
   useEffect(() => {
     const dataFetchingEffect = async () => {
       const result = await fetchDocuments();
+      console.log(result);
+      // If there is an error when verifying the token.
+      if (result.name) {
+        setMessage(`${result.name}: ${result.message}`)
+        return;
+      }
       const documentArray = result.data.res;
       const list = documentArray.map(document =>
           <div key={document._id}>
@@ -52,6 +64,7 @@ const GetDocuments = () => {
       <div className='width-half center'>
         <h1>Fetched Data</h1>
         {documentList}
+        {message}
       </div>
     );
 }
