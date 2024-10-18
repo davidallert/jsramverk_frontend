@@ -13,6 +13,7 @@ import CreateUser from './pages/CreateUser'
 
 // Utils.
 import reportWebVitals from './reportWebVitals';
+import LoginUser from './pages/LoginUser';
 
 export default function MyApp() {
   return (
@@ -35,6 +36,7 @@ export default function MyApp() {
         <Route path="/document/:id" element={ <Document />} />
         <Route path="/create" element={ <CreateDocument />} />
         <Route path="/user" element={ <CreateUser />} />
+        <Route path="/login" element={ <LoginUser />} />
       </Routes>
     </HashRouter>
   );
