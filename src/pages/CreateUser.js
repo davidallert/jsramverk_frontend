@@ -41,7 +41,7 @@ const CreateUser = () => {
         const response = await postUser(); // Post to /documents.
         // console.log(response)
         if (response.ok) {
-            console.info("Document created successfully.");
+            console.info("User created successfully.");
         }
     }
 

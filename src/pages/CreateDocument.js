@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import auth from '../models/auth';
+import { useNavigate } from 'react-router-dom';
 
 const CreateDocument = () => {
 
@@ -7,7 +8,6 @@ const CreateDocument = () => {
     const [content, setContent] = useState('');
 
     const postDocument = async () => {
-        // TODO call post route with form data.
 
         const doc = {
             title: title,
@@ -17,10 +17,13 @@ const CreateDocument = () => {
         console.log(doc);
 
         try {
-            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents`, {
+            // For deployment: https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents
+            // For testing: http://localhost:1337/documents
+            const response = await fetch(`http://localhost:1337/documents`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'x-access-token': auth.token,
                 },
                 body: JSON.stringify(doc)
             });
@@ -43,6 +46,16 @@ const CreateDocument = () => {
             console.info("Document created successfully.");
         }
     }
+
+    // Only allowed logged in users to create new documents.
+    // When a user is logged in the owner (email) is known.
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!auth.token) {
+            navigate('/login'); // Redirect to login if not logged in. Else continue rendering.
+        }
+    }, [auth, navigate]);
+
 
     return (
         <div className='width-half center'>

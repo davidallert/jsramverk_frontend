@@ -17,17 +17,6 @@ import LoginUser from './pages/LoginUser';
 
 export default function MyApp() {
   return (
-    // Only works locally.
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<App />} />
-    //     <Route path="/hello" element={<HelloWorld />} />
-    //     <Route path="/documents" element={<Documents />} />
-    //     <Route path="/document/:id" element={<Document />} />
-    //     <Route path="/create" element={<CreateDocument />} />
-    //   </Routes>
-    // </BrowserRouter>
-
     <HashRouter>
       <Routes>
         <Route path="/" element={ <App />} />
