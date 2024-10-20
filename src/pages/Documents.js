@@ -11,7 +11,7 @@ const GetDocuments = () => {
     try {
       // For deployment: https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents
       // For testing: http://localhost:1337/documents
-      const response = await fetch('http://localhost:1337/documents', {
+      const response = await fetch('https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/documents', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
