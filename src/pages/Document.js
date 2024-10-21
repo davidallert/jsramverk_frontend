@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import '../style/index.css';
 import auth from '../models/auth'
+import { io } from "socket.io-client";
+
+const SERVER_URL = "http://localhost:1337";
 
 const GetDocument = () => {
     const params = useParams();
@@ -10,6 +13,26 @@ const GetDocument = () => {
     const [title, setTitle] = useState("Loading...");
     const [content, setContent] = useState("Loading...");
     const [email, setEmail] = useState("");
+
+    const socket = useRef(null);
+
+    useEffect(() => {
+        socket.current = io(SERVER_URL);
+
+        socket.current.on("content", (data) => {
+            setContent(data);
+        });
+
+        return () => {
+            socket.current.disconnect();
+        }
+    }, []);
+
+    function handleContentChange(e) {
+        const value = e.target.value;
+
+        socket.current.emit("content", value)
+    }
 
     const fetchDocument = async () => {
         try {
@@ -134,7 +157,8 @@ const GetDocument = () => {
                         type="text" 
                         name="content"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        // onChange={(e) => setContent(e.target.value)}
+                        onChange={handleContentChange}
                     />
                     <input className="form-element" type="submit" value="Save"/>
                 </form>
