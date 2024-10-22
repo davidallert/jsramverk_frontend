@@ -4,7 +4,8 @@ import '../style/index.css';
 import auth from '../models/auth'
 import { io } from "socket.io-client";
 
-const SERVER_URL = "http://localhost:1337";
+// const SERVER_URL = "http://localhost:1337";
+const SERVER_URL = "https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/";
 
 const GetDocument = () => {
     const params = useParams();
@@ -19,6 +20,8 @@ const GetDocument = () => {
     useEffect(() => {
         socket.current = io(SERVER_URL);
 
+        socket.current.emit('joinRoom', id); // test
+
         socket.current.on("content", (data) => {
             setContent(data);
         });
@@ -31,7 +34,8 @@ const GetDocument = () => {
     function handleContentChange(e) {
         const value = e.target.value;
 
-        socket.current.emit("content", value)
+        // socket.current.emit("content", value) // old
+        socket.current.emit("content", { room: id, content: value }); // test
     }
 
     const fetchDocument = async () => {
