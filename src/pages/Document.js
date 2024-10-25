@@ -14,6 +14,7 @@ const GetDocument = () => {
     const [title, setTitle] = useState("Loading...");
     const [content, setContent] = useState("Loading...");
     const [email, setEmail] = useState("");
+    const [selectedText, setSelectedText] = useState('');
 
     const socket = useRef(null);
 
@@ -34,9 +35,30 @@ const GetDocument = () => {
     function handleContentChange(e) {
         const value = e.target.value;
 
-        // socket.current.emit("content", value) // old
+        // socket.current.emit("content", value) // previous
         socket.current.emit("content", { room: id, content: value }); // test
     }
+
+
+    const handleInputSelection = (e) => {
+        const inputElement = e.target;
+
+        // Ensure that selectionStart and selectionEnd are not null
+        if (inputElement.selectionStart !== null && inputElement.selectionEnd !== null) {
+            const start = inputElement.selectionStart;
+            const end = inputElement.selectionEnd;
+
+            if (start !== end) {
+                const text = inputElement.value.substring(start, end);
+                setSelectedText(text); // Save the selected text
+                console.log("Selected text:", text);
+            } else {
+                setSelectedText('');
+            }
+        } else {
+            console.log("Input is not focused or no selection");
+        }
+    };
 
     const fetchDocument = async () => {
         try {
@@ -163,6 +185,7 @@ const GetDocument = () => {
                         value={content}
                         // onChange={(e) => setContent(e.target.value)}
                         onChange={handleContentChange}
+                        onSelect={handleInputSelection}
                     />
                     <input className="form-element" type="submit" value="Save"/>
                 </form>

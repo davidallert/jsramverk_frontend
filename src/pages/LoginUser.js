@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../style/index.css';
 import auth from '../models/auth';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const LoginUser = () => {
-
     // const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -63,14 +61,6 @@ const LoginUser = () => {
         <div className='width-half center'>
             <h1>Login</h1>
             <form className="width-full" onSubmit={onSubmit}>
-                {/* <label className="form-element" htmlFor ="username">Username</label>
-                <input
-                    className="form-element"
-                    type="text"
-                    name="username" 
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                /> */}
                 <label className="form-element" htmlFor ="email">Email</label>
                 <input
                     className="form-element"
