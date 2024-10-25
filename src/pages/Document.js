@@ -16,6 +16,7 @@ const GetDocument = () => {
     const [email, setEmail] = useState("");
     const [comment, setComment] = useState("");
     const [selectedText, setSelectedText] = useState('');
+    const [commentList, setCommentList] = useState([]);
 
     const socket = useRef(null);
 
@@ -190,7 +191,18 @@ const GetDocument = () => {
           const document = result[0];
           setTitle(document.title);
           setContent(document.content);
-          console.log(document);
+
+          const commentArray = document.comments;
+          console.log(commentArray);
+          const list = commentArray.map(comment =>
+            <div key={comment.createdAt}>
+                <h2>
+                    {comment.text}
+                </h2>
+                <p>{comment.comment}</p>
+              </div>
+          )
+          setCommentList(list);
         };
         dataFetchingEffect();
       }, []);
@@ -267,6 +279,7 @@ const GetDocument = () => {
                     />
                     <input className="form-element" type="submit" value="comment"/>
                 </form>
+                {commentList}
             </div>
         </div>
         </div>
