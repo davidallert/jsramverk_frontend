@@ -14,6 +14,7 @@ const GetDocument = () => {
     const [title, setTitle] = useState("Loading...");
     const [content, setContent] = useState("Loading...");
     const [email, setEmail] = useState("");
+    const [comment, setComment] = useState("");
     const [selectedText, setSelectedText] = useState('');
 
     const socket = useRef(null);
@@ -136,13 +137,14 @@ const GetDocument = () => {
     }
 
     const commentDocument = async () => {
-        const commentDocument = {
-            text: text,
+        const commentObject = {
+            id: id,
+            text: selectedText,
             comment: comment
         }
 
-        console.log(commentDocument);
-
+        console.log(commentObject);
+        // https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment
         try {
             const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment`, {
                 method: 'POST',
@@ -150,7 +152,7 @@ const GetDocument = () => {
                     'Content-Type': 'application/json',
                     'x-access-token': auth.token,
                 },
-                body: JSON.stringify(commentDocument)
+                body: JSON.stringify(commentObject)
             });
 
             if (!response.ok) {
@@ -177,9 +179,8 @@ const GetDocument = () => {
 
     const onSubmitComment = async (event) => {
         event.preventDefault();
-        const result = await updateDocument();
+        const result = await commentDocument();
         console.log(result);
-
     }
 
 
@@ -246,21 +247,23 @@ const GetDocument = () => {
 
             <div className="right-column">
                 <h1>Comments</h1>
-                <form className="width-full" onSubmit={{onSubmitComment}}>
+                <form className="width-full" onSubmit={onSubmitComment}>
                     <label className="form-element" htmlFor="selectedText">Selected Text</label>
                     <input
                         id="selectedText"
                         className="form-element"
                         type="text"
                         name="selectedText"
+                        value={selectedText}
                         readOnly
                     />
                     <label className="form-element" htmlFor="inputComment">Write your comment</label>
                     <input
-                        id="comment"
+                        id="inputComment"
                         className="form-element"
                         type="text"
-                        name="comment"
+                        name="inputComment"
+                        onChange={(e) => setComment(e.target.value)}
                     />
                     <input className="form-element" type="submit" value="comment"/>
                 </form>
