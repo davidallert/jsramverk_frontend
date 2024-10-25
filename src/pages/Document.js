@@ -135,6 +135,34 @@ const GetDocument = () => {
         }
     }
 
+    const commentDocument = async () => {
+        const commentDocument = {
+            text: text,
+            comment: comment
+        }
+
+        console.log(commentDocument);
+
+        try {
+            const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': auth.token,
+                },
+                body: JSON.stringify(commentDocument)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to post data.')
+            }
+
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const onSubmit = async (event) => {
         event.preventDefault();
         const result = await updateDocument();
@@ -146,6 +174,14 @@ const GetDocument = () => {
         event.preventDefault();
         await inviteUser();
     }
+
+    const onSubmitComment = async (event) => {
+        event.preventDefault();
+        const result = await updateDocument();
+        console.log(result);
+
+    }
+
 
     useEffect(() => {
         const dataFetchingEffect = async () => {
@@ -160,57 +196,78 @@ const GetDocument = () => {
 
       return (
         <>
-            {/* Document form */}
-            <div className='width-half center'>
-                <h1>Displaying single document</h1>
-                <form className="width-full" onSubmit={onSubmit}>
+        <div className='center-wrapper'>
+        <div className="main-container">
+            <div className="left-column">
+                <div className="width-full">
+                    <h1>Displaying single document</h1>
+                    <form className="width-full" onSubmit={onSubmit}>
+                        <label className="form-element" htmlFor="id">ID (readonly)</label>
+                        <input className="form-element" type="text" name="id" defaultValue={id} readOnly />
+                        <label className="form-element" htmlFor="title">Title</label>
+                        <input
+                            id="title"
+                            className="form-element"
+                            type="text"
+                            name="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <label className="form-element" htmlFor="content">Content</label>
+                        <input
+                            id="content"
+                            className="form-element"
+                            type="text"
+                            name="content"
+                            value={content}
+                            onChange={handleContentChange}
+                            onSelect={handleInputSelection}
+                        />
+                        <input className="form-element" type="submit" value="Save"/>
+                    </form>
+                </div>
 
-                    <label className="form-element" htmlFor="id">ID (readonly)</label>
-                    <input className="form-element" type="text" name="id" defaultValue={id} readOnly />
-                    <label className="form-element" htmlFor ="title">Title</label>
+                <div className="width-full" style={{ marginTop: '30px' }}>
+                    <h1>Invite users to: {title}</h1>
+                    <form className="width-full" onSubmit={onSubmitInvite}>
+                        <label className="form-element" htmlFor="email">Email</label>
+                        <input
+                            id="email"
+                            className="form-element"
+                            type="email"
+                            name="email"
+                            placeholder="test@test.se"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <input className="form-element" type="submit" value="Invite"/>
+                    </form>
+                </div>
+            </div>
+
+            <div className="right-column">
+                <h1>Comments</h1>
+                <form className="width-full" onSubmit={{onSubmitComment}}>
+                    <label className="form-element" htmlFor="selectedText">Selected Text</label>
                     <input
-                        id="title"
+                        id="selectedText"
                         className="form-element"
                         type="text"
-                        name="title" 
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        name="selectedText"
+                        readOnly
                     />
-                    <label className="form-element" htmlFor ="content">Content</label>
+                    <label className="form-element" htmlFor="inputComment">Write your comment</label>
                     <input
-                        id="content"
+                        id="comment"
                         className="form-element"
-                        type="text" 
-                        name="content"
-                        value={content}
-                        // onChange={(e) => setContent(e.target.value)}
-                        onChange={handleContentChange}
-                        onSelect={handleInputSelection}
+                        type="text"
+                        name="comment"
                     />
-                    <input className="form-element" type="submit" value="Save"/>
+                    <input className="form-element" type="submit" value="comment"/>
                 </form>
             </div>
-
-            {/* Divider */}
-            <hr style={{marginTop: 50 + 'px', marginBottom: 50 + 'px'}}></hr> 
-
-            {/* Invite form */}
-            <div className='width-half center'>
-                <h1>Invite users to: {title}</h1>
-                <form className="width-full" onSubmit={onSubmitInvite}>
-                    <label className="form-element" htmlFor ="title">Email</label>
-                    <input
-                        id="email"
-                        className="form-element"
-                        type="email"
-                        name="email"
-                        placeholder="test@test.se"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input className="form-element" type="submit" value="Invite"/>
-                </form>
-            </div>
-        </>
+        </div>
+        </div>
+</>
       );
 }
 
