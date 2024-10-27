@@ -23,10 +23,24 @@ const GetDocument = () => {
     useEffect(() => {
         socket.current = io(SERVER_URL);
 
-        socket.current.emit('joinRoom', id); // test
+        socket.current.emit('joinRoom', id);
 
         socket.current.on("content", (data) => {
             setContent(data);
+        });
+
+        socket.current.on("comment", (data) => {
+            const newCommentDiv = document.createElement("div");
+            const newCommentHeader = document.createElement("h3");
+            const newCommentText = document.createElement("p");
+            newCommentHeader.textContent = data.text;
+            newCommentText.textContent = data.comment;
+    
+            newCommentDiv.append(newCommentHeader);
+            newCommentDiv.append(newCommentText);
+
+            const commentList = document.getElementById("commentList");
+            commentList.append(newCommentDiv);
         });
 
         return () => {
@@ -37,10 +51,8 @@ const GetDocument = () => {
     function handleContentChange(e) {
         const value = e.target.value;
 
-        // socket.current.emit("content", value) // previous
-        socket.current.emit("content", { room: id, content: value }); // test
+        socket.current.emit("content", { room: id, content: value });
     }
-
 
     const handleInputSelection = (e) => {
         const inputElement = e.target;
@@ -146,6 +158,10 @@ const GetDocument = () => {
 
         console.log(commentObject);
         // https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment
+
+        // Must be placed before the fetch for some reason?
+        socket.current.emit("comment", { room: id, comment: commentObject });
+
         try {
             const response = await fetch(`https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment`, {
                 method: 'POST',
@@ -159,11 +175,11 @@ const GetDocument = () => {
             if (!response.ok) {
                 throw new Error('Failed to post data.')
             }
-
             return response;
         } catch (error) {
             console.error(error);
         }
+
     }
 
     const onSubmit = async (event) => {
@@ -193,7 +209,6 @@ const GetDocument = () => {
           setContent(document.content);
 
           const commentArray = document.comments;
-          console.log(commentArray);
           const list = commentArray.map(comment =>
             <div key={comment.createdAt}>
                 <h2>
@@ -277,9 +292,11 @@ const GetDocument = () => {
                         name="inputComment"
                         onChange={(e) => setComment(e.target.value)}
                     />
-                    <input className="form-element" type="submit" value="comment"/>
+                    <input className="form-element" type="submit" value="Comment"/>
                 </form>
-                {commentList}
+                <div id="commentList">
+                    {commentList}
+                </div>
             </div>
         </div>
         </div>
