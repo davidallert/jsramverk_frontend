@@ -210,11 +210,13 @@ const GetDocument = () => {
 
           const commentArray = document.comments;
           const list = commentArray.map(comment =>
-            <div key={comment.createdAt}>
+            <div key={comment.createdAt} className='comment-wrapper'>
+                <div className='comment'>
                 <h2>
-                    {comment.text}
+                    <i className='underline'>{comment.text}:</i>
                 </h2>
                 <p>{comment.comment}</p>
+                </div>
               </div>
           )
           setCommentList(list);
@@ -295,6 +297,7 @@ const GetDocument = () => {
                     <input className="form-element" type="submit" value="Comment"/>
                 </form>
                 <div id="commentList">
+                    <h2 className='comment-title'>Comments:</h2>
                     {commentList}
                 </div>
             </div>
