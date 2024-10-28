@@ -31,13 +31,20 @@ const GetDocument = () => {
 
         socket.current.on("comment", (data) => {
             const newCommentDiv = document.createElement("div");
-            const newCommentHeader = document.createElement("h3");
+            newCommentDiv.classList.add("comment-wrapper")
+            const newCommentDivInside = document.createElement("div");
+            newCommentDiv.classList.add("comment")
+            const newCommentHeader = document.createElement("h2");
+            newCommentHeader.classList.add("underline")
             const newCommentText = document.createElement("p");
+
             newCommentHeader.textContent = data.text;
             newCommentText.textContent = data.comment;
-    
-            newCommentDiv.append(newCommentHeader);
-            newCommentDiv.append(newCommentText);
+            newCommentHeader.innerHTML+= ":"
+
+            newCommentDiv.append(newCommentDivInside);
+            newCommentDivInside.append(newCommentHeader);
+            newCommentDivInside.append(newCommentText);
 
             const commentList = document.getElementById("commentList");
             commentList.append(newCommentDiv);
@@ -247,7 +254,7 @@ const GetDocument = () => {
                         <input
                             id="content"
                             className="form-element"
-                            type="text"
+                            type="text-area"
                             name="content"
                             value={content}
                             onChange={handleContentChange}
@@ -277,7 +284,7 @@ const GetDocument = () => {
             <div className="right-column">
                 <h1>Comments</h1>
                 <form className="width-full" onSubmit={onSubmitComment}>
-                    <label className="form-element" htmlFor="selectedText">Selected Text</label>
+                    <label className="form-element" htmlFor="selectedText">Mark text in content to select it:</label>
                     <input
                         id="selectedText"
                         className="form-element"
