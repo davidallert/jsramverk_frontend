@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { useParams } from 'react-router-dom';
 import '../style/index.css';
 import auth from '../models/auth'
 import { io } from "socket.io-client";
+import Editor from '@monaco-editor/react';
+
+function App() {
+  return <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />;
+}
+
+const rootElement = document.getElementById('root');
+ReactDOM.render(<App />, rootElement);
 
 // const SERVER_URL = "http://localhost:1337";
 const SERVER_URL = "https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/";
@@ -233,6 +242,7 @@ const GetDocument = () => {
 
       return (
         <>
+         <Editor height="20vh" width="50vh" defaultLanguage="javascript" defaultValue="// some comment" />
         <div className='center-wrapper'>
         <div className="main-container">
             <div className="left-column">
