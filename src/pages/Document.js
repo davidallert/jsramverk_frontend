@@ -6,13 +6,6 @@ import auth from '../models/auth'
 import { io } from "socket.io-client";
 import Editor from '@monaco-editor/react';
 
-function App() {
-  return <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />;
-}
-
-const rootElement = document.getElementById('root');
-ReactDOM.render(<App />, rootElement);
-
 // const SERVER_URL = "http://localhost:1337";
 const SERVER_URL = "https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/";
 
@@ -26,6 +19,7 @@ const GetDocument = () => {
     const [comment, setComment] = useState("");
     const [selectedText, setSelectedText] = useState('');
     const [commentList, setCommentList] = useState([]);
+    const [contentInputField, setContentInputField] = useState('');
 
     const socket = useRef(null);
 
@@ -68,6 +62,10 @@ const GetDocument = () => {
         const value = e.target.value;
 
         socket.current.emit("content", { room: id, content: value });
+    }
+
+    function handleEditorChange(value, event) {
+        setContent(value);
     }
 
     const handleInputSelection = (e) => {
@@ -236,13 +234,27 @@ const GetDocument = () => {
               </div>
           )
           setCommentList(list);
+
+        //   if (true) { // TODO if document is of type text
+        //     setContentInputField(
+        //     <input
+        //         id="content"
+        //         className="form-element"
+        //         type="text-area"
+        //         name="content"
+        //         value={content}
+        //         onChange={handleContentChange}
+        //         onSelect={handleInputSelection}
+        //     />)
+        //   } else { // TODO if document is of type code
+        //     setContentInputField(<Editor id="editor" height="20vh" width="100%" defaultLanguage="javascript" value={content} onChange={handleEditorChange}/>)
+        //   }
         };
         dataFetchingEffect();
       }, []);
 
       return (
         <>
-         <Editor height="20vh" width="50vh" defaultLanguage="javascript" defaultValue="// some comment" />
         <div className='center-wrapper'>
         <div className="main-container">
             <div className="left-column">
@@ -261,6 +273,8 @@ const GetDocument = () => {
                             onChange={(e) => setTitle(e.target.value)}
                         />
                         <label className="form-element" htmlFor="content">Content</label>
+                        {contentInputField}
+                        {/* <Editor id="editor" height="20vh" width="100%" defaultLanguage="javascript" value={content} /> */}
                         <input
                             id="content"
                             className="form-element"
