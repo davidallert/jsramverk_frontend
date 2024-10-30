@@ -44,6 +44,7 @@ const CreateDocument = () => {
         const response = await postDocument(); // Post to /documents.
         if (response.ok) {
             console.info("Document created successfully.");
+            navigate('/documents');
         }
     }
 
