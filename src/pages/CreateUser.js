@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import '../style/index.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const CreateUser = () => {
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -9,6 +12,7 @@ const CreateUser = () => {
 
     const postUser = async () => {
         // TODO call post route with form data.
+
 
         const user = {
             username: username,
@@ -42,6 +46,7 @@ const CreateUser = () => {
         // console.log(response)
         if (response.ok) {
             console.info("User created successfully.");
+            navigate('/');
         }
     }
 
