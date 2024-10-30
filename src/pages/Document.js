@@ -173,7 +173,6 @@ const GetDocument = () => {
         console.log(commentObject);
         // https://jsramverk-editor-daae23-cucfhygme0ete5ea.swedencentral-01.azurewebsites.net/comment
 
-        // Must be placed before the fetch for some reason?
         socket.current.emit("comment", { room: id, comment: commentObject });
 
         try {

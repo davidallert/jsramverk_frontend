@@ -46,7 +46,7 @@ const CreateUser = () => {
         // console.log(response)
         if (response.ok) {
             console.info("User created successfully.");
-            navigate('/');
+            navigate('/login');
         }
     }
 

@@ -12,9 +12,9 @@ const Navigation = () => {
           <li>
             <Link to="/documents">Documents</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/document/66e6fce08939d00d5d5d578d">Example doc</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/create">Create new</Link>
           </li>
